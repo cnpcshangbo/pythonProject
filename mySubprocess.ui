@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>Form_subprocess</class>
+ <widget class="QWidget" name="Form_subprocess">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -25,7 +25,7 @@ QTextEdit{
 	font: 18pt &quot;.AppleSystemUIFont&quot;;
 }</string>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>20</x>

@@ -1,7 +1,7 @@
 import sys
 from random import randint
 
-from PySide2.QtWidgets import (
+from PySide6.QtWidgets import (
     QApplication,
     QLabel,
     QMainWindow,

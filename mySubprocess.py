@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import sys
 
-from PySide6.QtWidgets import QApplication, QMainWindow, QWidget
+from PySide6.QtWidgets import QApplication, QWidget
 
 from mySubprocessui import Ui_Form
 
