@@ -16,13 +16,13 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QLabel, QPushButton, QSizePolicy,
-    QVBoxLayout, QWidget)
+    QTextBrowser, QVBoxLayout, QWidget)
 
 class Ui_Form(object):
     def setupUi(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")
-        Form.resize(397, 560)
+        Form.resize(397, 850)
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -34,7 +34,7 @@ class Ui_Form(object):
 "}")
         self.layoutWidget = QWidget(Form)
         self.layoutWidget.setObjectName(u"layoutWidget")
-        self.layoutWidget.setGeometry(QRect(40, 20, 326, 423))
+        self.layoutWidget.setGeometry(QRect(40, 20, 326, 611))
         palette = QPalette()
         brush = QBrush(QColor(0, 0, 0, 216))
         brush.setStyle(Qt.SolidPattern)
@@ -317,6 +317,35 @@ class Ui_Form(object):
 
         self.verticalLayout.addWidget(self.pushButton_7)
 
+        self.pushButton_8 = QPushButton(self.layoutWidget)
+        self.pushButton_8.setObjectName(u"pushButton_8")
+        self.pushButton_8.setMinimumSize(QSize(0, 50))
+        palette8 = QPalette()
+        palette8.setBrush(QPalette.Active, QPalette.Button, brush2)
+        palette8.setBrush(QPalette.Active, QPalette.Light, brush3)
+        palette8.setBrush(QPalette.Active, QPalette.Base, brush2)
+        palette8.setBrush(QPalette.Active, QPalette.Window, brush2)
+        palette8.setBrush(QPalette.Inactive, QPalette.Button, brush2)
+        palette8.setBrush(QPalette.Inactive, QPalette.Light, brush3)
+        palette8.setBrush(QPalette.Inactive, QPalette.Base, brush2)
+        palette8.setBrush(QPalette.Inactive, QPalette.Window, brush2)
+        palette8.setBrush(QPalette.Disabled, QPalette.Button, brush2)
+        palette8.setBrush(QPalette.Disabled, QPalette.Light, brush3)
+        palette8.setBrush(QPalette.Disabled, QPalette.Base, brush2)
+        palette8.setBrush(QPalette.Disabled, QPalette.Window, brush2)
+        self.pushButton_8.setPalette(palette8)
+        self.pushButton_8.setStyleSheet(u"QPushButton{\n"
+"background-color:rgb(232, 255, 231);\n"
+"	font: 20pt \".AppleSystemUIFont\";\n"
+"}")
+
+        self.verticalLayout.addWidget(self.pushButton_8)
+
+        self.textBrowser = QTextBrowser(self.layoutWidget)
+        self.textBrowser.setObjectName(u"textBrowser")
+
+        self.verticalLayout.addWidget(self.textBrowser)
+
 
         self.retranslateUi(Form)
 
@@ -333,5 +362,34 @@ class Ui_Form(object):
         self.pushButton_5.setText(QCoreApplication.translate("Form", u"PID for Drone Position Control", None))
         self.pushButton_6.setText(QCoreApplication.translate("Form", u"Drill Press Sensor", None))
         self.pushButton_7.setText(QCoreApplication.translate("Form", u"Lock or Release (downward)?", None))
+        self.pushButton_8.setText(QCoreApplication.translate("Form", u"ROS Bag", None))
+        self.textBrowser.setHtml(QCoreApplication.translate("Form", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Initialization notes:</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">(1) mavros should show PX4 version number;</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">(2) Vicon_bridge should show drilling5 published;</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">(6) Check DrillPress sense sho"
+                        "ws D_Pos not &quot;0&quot;;</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Check flight mode settings in QGroundControl.</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Operation processure:</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">1. Type &quot;1&quot; in window (4) to send position setpoint;</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">2. Arm drone from RC and switch to offboard mode to let drone fly to waypoint 1;</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">3. Type &quot;1&quot; in window (7) to release drill (downward);</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; mar"
+                        "gin-right:0px; -qt-block-indent:0; text-indent:0px;\">4. Check &quot;Raw&quot; value from window (6) and type rounded absolute &quot;Raw&quot; value into window (7) to set offset value in release mode;</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">5. Raise drill press;</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">6. In window (4), type &quot;2&quot; and press &quot;Enter&quot; to let drone fly to position 2 which is just above the board;</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">7. Use drill press to drill and lift afterward;</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">8. In window (4), type &quot;3&quot; and press &quot;Enter&quot; to let drone fly to position 3 which is above"
+                        " the takeoff position;</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">9. In window (7), type &quot;2&quot; to lock the drill (forward);</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">10. Make sure RC throttle is at middle position;</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">11. Turn off off-board mode to switch back to &quot;position&quot; mode;</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">12. Manual land the drone;</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">13. Disarm or kill the drone.</p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0p"
+                        "x; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
     # retranslateUi
 
