@@ -4,6 +4,7 @@ import subprocess
 import sys
 import threading
 import time
+import signal
 
 from PySide6.QtWidgets import QApplication, QWidget
 
@@ -40,7 +41,7 @@ class MainWindow(QWidget):
         format = "%(asctime)s: %(message)s"
         logging.basicConfig(format=format, level=logging.INFO,
                             datefmt="%H:%M:%S")
-        #if self.p is None:
+        # if self.p is None:
         # try:
         #     self.p
         # except NameError:
@@ -50,34 +51,44 @@ class MainWindow(QWidget):
             x = threading.Thread(target=self.thread_function, args=(1,))
             x.start()
 
-        self.p.stdin.write(self.ui.lineEdit.text().encode())
+        # self.p.stdin.write(self.ui.lineEdit.text().encode())
+        self.p.stdin.write(''.join([self.ui.lineEdit.text(), '\n']).encode())
         self.p.stdin.flush()  # not necessary in this case
         # get output from process "not time to break"
         # one_line_output = p.stdout.readline()
-        # print(one_line_output)
+        print("sent" + self.ui.lineEdit.text())
 
-        time.sleep(2)
-        # write "n\n" to that process for if r=='n':
-        self.p.stdin.write(self.ui.lineEdit.text().encode())
-        self.p.stdin.flush()  # not necessary in this case
+        # time.sleep(2)
+        # # write "n\n" to that process for if r=='n':
+        # self.p.stdin.write(self.ui.lineEdit.text().encode())
+        # self.p.stdin.flush()  # not necessary in this case
 
         # self.ui.textEdit.setText(stdout.decode("utf-8"))
         # self.ui.textEdit.verticalScrollBar().setValue(self.ui.textEdit.verticalScrollBar().maximum())
 
-# self.ui.label_3.setText("test")
+    # self.ui.label_3.setText("test")
 
     def thread_function(self, name):
         logging.info("Thread %s: starting", name)
         # get output from process "Something to print"
         while True:
-            time.sleep(1)
+            time.sleep(0.1)
             one_line_output = self.p.stdout.readline()
             logging.info("Thread %s: running", name)
             logging.info(one_line_output)
+
             if one_line_output == b"":
                 logging.info("Thread %s: finishing", name)
                 break
 
+
+def handler(signum, frame):
+    res = input("Ctrl-c was pressed. Do you really want to exit? y/n ")
+    if res == 'y':
+        exit(1)
+
+
+signal.signal(signal.SIGINT, handler)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
