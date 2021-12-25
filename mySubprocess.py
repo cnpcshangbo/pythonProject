@@ -47,13 +47,26 @@ class MainWindow(QWidget):
         # except NameError:
         if not hasattr(self, 'p'):
             logging.info("Creating Pipe.")
-            self.p = subprocess.Popen(["python", "1st.py"], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+            self.p = subprocess.Popen(self.ui.lineEdit.text(), shell=True, stdin=subprocess.PIPE,
+                                      stdout=subprocess.PIPE)
+            # self.p = subprocess.Popen(["python", "1st.py"], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
             x = threading.Thread(target=self.thread_function, args=(1,))
             x.start()
 
         # self.p.stdin.write(self.ui.lineEdit.text().encode())
         self.p.stdin.write(''.join([self.ui.lineEdit.text(), '\n']).encode())
-        self.p.stdin.flush()  # not necessary in this case
+        try:
+            self.p.stdin.flush()  # not necessary in this case
+        except NameError:
+            self.p = subprocess.Popen(self.ui.lineEdit.text(), shell=True, stdin=subprocess.PIPE,
+                                      stdout=subprocess.PIPE)
+        except:
+            self.p = subprocess.Popen(self.ui.lineEdit.text(), shell=True, stdin=subprocess.PIPE,
+                                      stdout=subprocess.PIPE)
+            x = threading.Thread(target=self.thread_function, args=(1,))
+            x.start()
+
+
         # get output from process "not time to break"
         # one_line_output = p.stdout.readline()
         print("sent" + self.ui.lineEdit.text())
