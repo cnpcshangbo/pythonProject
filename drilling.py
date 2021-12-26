@@ -32,7 +32,7 @@ class AnotherWindow(QWidget):
         # exec(open("mySubprocess.py").read())
         if not hasattr(self, 'p'):
             logging.info("Creating Pipe.")
-            self.p = subprocess.Popen(self.ui.lineEdit.text(), shell=True, stdin=subprocess.PIPE,
+            self.p = subprocess.Popen('source ~/.zshrc && ' + self.ui.lineEdit.text(), shell=True, stdin=subprocess.PIPE,
                                       stdout=subprocess.PIPE, stderr=subprocess.STDOUT, executable='/bin/zsh')
             # self.p = subprocess.Popen(["python", "1st.py"], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
             x = threading.Thread(target=self.thread_function, args=(1,))
@@ -46,7 +46,7 @@ class AnotherWindow(QWidget):
             #     self.p = subprocess.Popen(self.ui.lineEdit.text(), shell=True, stdin=subprocess.PIPE,
             #                               stdout=subprocess.PIPE, stderr=subprocess.PIPE, checked = True)
             except:
-                self.p = subprocess.Popen(self.ui.lineEdit.text(), shell=True, stdin=subprocess.PIPE,
+                self.p = subprocess.Popen('source ~/.zshrc && ' + self.ui.lineEdit.text(), shell=True, stdin=subprocess.PIPE,
                                           stdout=subprocess.PIPE, stderr=subprocess.STDOUT, executable='/bin/zsh')
                 x = threading.Thread(target=self.thread_function, args=(1,))
                 x.start()
@@ -72,7 +72,7 @@ class AnotherWindow(QWidget):
             time.sleep(0.1)
             one_line_output = self.p.stdout.readline()
             logging.info("Thread %s: running", name)
-            logging.info(one_line_output)
+            logging.info(one_line_output.decode())
             self.ui.textEdit.append(one_line_output.decode("utf-8"))
             self.ui.textEdit.verticalScrollBar().setValue(self.ui.textEdit.verticalScrollBar().maximum())
 
