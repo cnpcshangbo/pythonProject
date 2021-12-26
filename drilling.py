@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
+import logging
 import subprocess
 import sys
+import threading
+import time
 
 from PySide6.QtWidgets import QApplication, QMainWindow, QWidget
 
@@ -21,17 +24,62 @@ class AnotherWindow(QWidget):
         """
 
         """
+        format = "%(asctime)s: %(message)s"
+        logging.basicConfig(format=format, level=logging.INFO,
+                            datefmt="%H:%M:%S")
         print("button clicked")
         # self.ui.textEdit.setText(str(subprocess.call("ls", shell=True)))
         # exec(open("mySubprocess.py").read())
-        MyOut = subprocess.Popen(self.ui.lineEdit.text(), shell=True,
-                                 stdout=subprocess.PIPE,
-                                 stderr=subprocess.STDOUT)
-        stdout, stderr = MyOut.communicate()
-        print(stdout)
-        print(stderr)
-        self.ui.textEdit.setText(stdout.decode("utf-8"))
-        self.ui.textEdit.verticalScrollBar().setValue(self.ui.textEdit.verticalScrollBar().maximum())
+        if not hasattr(self, 'p'):
+            logging.info("Creating Pipe.")
+            self.p = subprocess.Popen(self.ui.lineEdit.text(), shell=True, stdin=subprocess.PIPE,
+                                      stdout=subprocess.PIPE)
+            # self.p = subprocess.Popen(["python", "1st.py"], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+            x = threading.Thread(target=self.thread_function, args=(1,))
+            x.start()
+        else:
+            # self.p.stdin.write(self.ui.lineEdit.text().encode())
+            self.p.stdin.write(''.join([self.ui.lineEdit.text(), '\n']).encode())
+            try:
+                self.p.stdin.flush()  # not necessary in this case
+            except NameError:
+                self.p = subprocess.Popen(self.ui.lineEdit.text(), shell=True, stdin=subprocess.PIPE,
+                                          stdout=subprocess.PIPE)
+            except:
+                self.p = subprocess.Popen(self.ui.lineEdit.text(), shell=True, stdin=subprocess.PIPE,
+                                          stdout=subprocess.PIPE)
+                x = threading.Thread(target=self.thread_function, args=(1,))
+                x.start()
+
+
+            # get output from process "not time to break"
+            # one_line_output = p.stdout.readline()
+            print("sent" + self.ui.lineEdit.text())
+
+            # MyOut = subprocess.Popen(self.ui.lineEdit.text(), shell=True,
+            #                          stdout=subprocess.PIPE,
+            #                          stderr=subprocess.STDOUT)
+            # stdout, stderr = MyOut.communicate()
+            # print(stdout)
+            # print(stderr)
+            # self.ui.textEdit.setText(stdout.decode("utf-8"))
+            # self.ui.textEdit.verticalScrollBar().setValue(self.ui.textEdit.verticalScrollBar().maximum())
+
+    def thread_function(self, name):
+        logging.info("Thread %s: starting", name)
+        # get output from process "Something to print"
+        while True:
+            time.sleep(0.1)
+            one_line_output = self.p.stdout.readline()
+            logging.info("Thread %s: running", name)
+            logging.info(one_line_output)
+            self.ui.textEdit.append(one_line_output.decode("utf-8"))
+            self.ui.textEdit.verticalScrollBar().setValue(self.ui.textEdit.verticalScrollBar().maximum())
+
+
+            if one_line_output == b"":
+                logging.info("Thread %s: finishing", name)
+                break
 
 
 class RunMavros(AnotherWindow):
