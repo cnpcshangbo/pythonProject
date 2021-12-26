@@ -33,7 +33,7 @@ class AnotherWindow(QWidget):
         if not hasattr(self, 'p'):
             logging.info("Creating Pipe.")
             self.p = subprocess.Popen(self.ui.lineEdit.text(), shell=True, stdin=subprocess.PIPE,
-                                      stdout=subprocess.PIPE)
+                                      stdout=subprocess.PIPE, stderr=subprocess.STDOUT, executable='/bin/zsh')
             # self.p = subprocess.Popen(["python", "1st.py"], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
             x = threading.Thread(target=self.thread_function, args=(1,))
             x.start()
@@ -42,12 +42,12 @@ class AnotherWindow(QWidget):
             self.p.stdin.write(''.join([self.ui.lineEdit.text(), '\n']).encode())
             try:
                 self.p.stdin.flush()  # not necessary in this case
-            except NameError:
-                self.p = subprocess.Popen(self.ui.lineEdit.text(), shell=True, stdin=subprocess.PIPE,
-                                          stdout=subprocess.PIPE)
+            # except NameError:
+            #     self.p = subprocess.Popen(self.ui.lineEdit.text(), shell=True, stdin=subprocess.PIPE,
+            #                               stdout=subprocess.PIPE, stderr=subprocess.PIPE, checked = True)
             except:
                 self.p = subprocess.Popen(self.ui.lineEdit.text(), shell=True, stdin=subprocess.PIPE,
-                                          stdout=subprocess.PIPE)
+                                          stdout=subprocess.PIPE, stderr=subprocess.STDOUT, executable='/bin/zsh')
                 x = threading.Thread(target=self.thread_function, args=(1,))
                 x.start()
 
